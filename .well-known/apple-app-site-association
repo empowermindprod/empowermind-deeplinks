@@ -1,0 +1,20 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "PSWA65N6D2.com.empowermind.elvira.fediuchko",
+        "paths": [
+          "/app/*",
+          "/course/*", 
+          "/lesson/*",
+          "/profile/*",
+          "/auth/*",
+          "/share/*",
+          "/study/*"
+        ]
+      }
+    ]
+  }
+}
+
