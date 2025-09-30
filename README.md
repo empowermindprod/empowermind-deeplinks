@@ -15,21 +15,13 @@ This repository contains the configuration files needed for deep linking in the 
 2. Go to repository Settings → Pages
 3. Set Source to "Deploy from a branch"
 4. Select "main" branch
-5. Set custom domain to `empowermind.tech`
+5. Set custom domain to `deeplinks.empowermind.tech`
 6. Enable "Enforce HTTPS"
 
 ### 2. DNS Configuration
-Add these A records to your domain DNS:
+Add this CNAME record to your domain DNS:
 ```
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
-```
-
-Add CNAME record:
-```
-www → yourusername.github.io
+deeplinks → empowermindprod.github.io
 ```
 
 ### 3. Mobile App Configuration
@@ -38,10 +30,10 @@ Update your mobile app with the configurations provided in the other files in th
 ## 🔗 Test Links
 
 After setup, test these URLs:
-- `https://empowermind.tech/app/home`
-- `https://empowermind.tech/course/123`
-- `https://empowermind.tech/lesson/456`
-- `https://empowermind.tech/profile/user`
+- `https://deeplinks.empowermind.tech/app/home`
+- `https://deeplinks.empowermind.tech/course/123`
+- `https://deeplinks.empowermind.tech/lesson/456`
+- `https://deeplinks.empowermind.tech/profile/user`
 
 ## 📱 App Details
 

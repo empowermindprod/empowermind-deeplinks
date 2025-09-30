@@ -12,7 +12,7 @@ highlighter: rouge
 # Site settings
 title: "EmpowerMind Deep Links"
 description: "Deep linking configuration for EmpowerMind mobile app"
-url: "https://empowermind.tech"
+url: "https://deeplinks.empowermind.tech"
 
 # Build settings
 safe: true
