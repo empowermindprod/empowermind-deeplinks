@@ -38,6 +38,7 @@ After setup, test these URLs:
 ## 📱 App Details
 
 - **iOS Bundle ID**: `com.empowermind.elvira.fediuchko`
-- **Android Package**: `com.empowermind`
+- **Android Package (Dev)**: `com.empowermind`
+- **Android Package (Prod)**: `com.empowermind.prod`
 - **Apple Team ID**: `PSWA65N6D2`
 - **SHA256 Fingerprint**: `EF:91:1B:5C:9D:87:27:EC:C8:56:44:EC:B3:73:B5:93:60:48:CE:A0:C6:CE:2E:2D:C5:33:73:31:D3:A3:10:2F`
