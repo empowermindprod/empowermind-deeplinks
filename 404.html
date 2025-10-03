@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmpowerMind Deep Link</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .fallback {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        .fallback a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🚀 EmpowerMind</div>
+        <div class="message">Opening in app...</div>
+        <div class="spinner"></div>
+        <div class="fallback">
+            <p>If the app doesn't open automatically:</p>
+            <p>📱 <strong>Android:</strong> Tap "Open with EmpowerMind"</p>
+            <p>🍎 <strong>iOS:</strong> Tap "Open" when prompted</p>
+            <p><a href="/">Visit our website</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Get the current URL path
+        const currentPath = window.location.pathname;
+        const currentSearch = window.location.search;
+        const fullUrl = window.location.href;
+        
+        console.log('🔗 Deep link intercepted:', fullUrl);
+        
+        // Try to open the app with the deep link
+        function attemptAppOpen() {
+            // For Android - try intent URL
+            const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind;end`;
+            
+            // For iOS - try universal link
+            const universalLink = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}`;
+            
+            console.log('🤖 Trying Android intent:', androidIntent);
+            console.log('🍎 Trying iOS universal link:', universalLink);
+            
+            // Create a hidden iframe to trigger the app
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = androidIntent;
+            document.body.appendChild(iframe);
+            
+            // Fallback for iOS
+            setTimeout(() => {
+                window.location.href = universalLink;
+            }, 500);
+            
+            // Remove iframe after attempt
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+            }, 1000);
+        }
+        
+        // Attempt to open app immediately
+        attemptAppOpen();
+        
+        // Show fallback message after 3 seconds
+        setTimeout(() => {
+            document.querySelector('.message').textContent = 'App not installed?';
+            document.querySelector('.spinner').style.display = 'none';
+        }, 3000);
+    </script>
+</body>
+</html>
