@@ -5,13 +5,19 @@
       {
         "appID": "PSWA65N6D2.com.empowermind.elvira.fediuchko",
         "paths": [
-          "/app/*",
           "/course/*", 
           "/lesson/*",
           "/profile/*",
-          "/auth/*",
-          "/share/*",
-          "/study/*"
+          "/tab/*"
+        ]
+      },
+      {
+        "appID": "PSWA65N6D2.com.empowermind.app",
+        "paths": [
+          "/course/*", 
+          "/lesson/*",
+          "/profile/*",
+          "/tab/*"
         ]
       }
     ]
