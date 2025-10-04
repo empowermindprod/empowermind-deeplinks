@@ -30,6 +30,19 @@
         .test-link:hover {
             background: #0056CC;
         }
+        .js-link {
+            display: inline-block;
+            background: #34C759;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .js-link:hover {
+            background: #28A745;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +60,10 @@
         <h3>Custom Scheme (Fallback):</h3>
         <a href="empowermind://profile" class="test-link">👤 Open Profile (Custom)</a>
         <a href="empowermind://news" class="test-link">📰 Open News (Custom)</a>
+        
+        <h3>JavaScript Deep Links (Chrome Fix):</h3>
+        <button onclick="openDeepLink('profile')" class="js-link">👤 Open Profile (JS)</button>
+        <button onclick="openDeepLink('news')" class="js-link">📰 Open News (JS)</button>
     </div>
 
     <div class="link-section">
@@ -68,4 +85,32 @@
         </ol>
     </div>
 </body>
+<script>
+function openDeepLink(path) {
+    const httpsUrl = `https://deeplinks.empowermind.tech/${path}`;
+    const customUrl = `empowermind://${path}`;
+    
+    console.log('Trying to open:', httpsUrl);
+    
+    // Try HTTPS deep link first
+    const startTime = Date.now();
+    window.location.href = httpsUrl;
+    
+    // Fallback to custom scheme after 2 seconds if app didn't open
+    setTimeout(() => {
+        if (Date.now() - startTime < 2500) {
+            console.log('Fallback to custom scheme:', customUrl);
+            window.location.href = customUrl;
+        }
+    }, 2000);
+    
+    // Additional fallback - try to detect if we're still on the page
+    setTimeout(() => {
+        if (!document.hidden) {
+            console.log('App might not have opened, trying custom scheme again');
+            window.location.href = customUrl;
+        }
+    }, 3000);
+}
+</script>
 </html>
