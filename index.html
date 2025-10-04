@@ -89,8 +89,16 @@
 function openDeepLink(path) {
     const httpsUrl = `https://deeplinks.empowermind.tech/${path}`;
     const customUrl = `empowermind://${path}`;
+    const intentUrl = `intent://deeplinks.empowermind.tech/${path}#Intent;scheme=https;package=com.empowermind;end`;
     
     console.log('Trying to open:', httpsUrl);
+    
+    // For Android Chrome, try intent:// scheme first
+    if (/Android/i.test(navigator.userAgent)) {
+        console.log('Android detected, trying intent URL:', intentUrl);
+        window.location.href = intentUrl;
+        return;
+    }
     
     // Try HTTPS deep link first
     const startTime = Date.now();
