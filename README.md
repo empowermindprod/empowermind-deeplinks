@@ -6,7 +6,11 @@ This repository contains the configuration files needed for deep linking in the 
 
 - `.well-known/apple-app-site-association` - iOS Universal Links configuration
 - `.well-known/assetlinks.json` - Android App Links configuration
+- `.nojekyll` - Ensures GitHub Pages serves `.well-known` directory correctly
 - `index.html` - Test page with sample deep links
+- `privacy.html` - Privacy Policy page
+- `terms.html` - Terms of Service page
+- `404.html` - Custom 404 page with deep link redirection
 
 ## 🚀 Setup Instructions
 
