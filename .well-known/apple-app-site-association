@@ -5,29 +5,15 @@
       {
         "appID": "PSWA65N6D2.com.empowermind.elvira.fediuchko",
         "paths": [
+          "NOT /privacy*",
+          "NOT /terms*",
+          "NOT /*.html",
+          "NOT /index.html",
+          "NOT /404.html",
           "/course/*", 
           "/lesson/*",
           "/profile/*",
           "/tab/*"
-        ],
-        "components": [
-          {
-            "/": "/course/*",
-            "exclude": true,
-            "comment": "Exclude web pages from deep linking"
-          },
-          {
-            "/": "/privacy*",
-            "exclude": true
-          },
-          {
-            "/": "/terms*",
-            "exclude": true
-          },
-          {
-            "/": "/*.html",
-            "exclude": true
-          }
         ]
       },
       {
@@ -36,6 +22,8 @@
           "NOT /privacy*",
           "NOT /terms*",
           "NOT /*.html",
+          "NOT /index.html",
+          "NOT /404.html",
           "/course/*", 
           "/lesson/*",
           "/profile/*",
