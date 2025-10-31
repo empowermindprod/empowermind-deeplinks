@@ -8,12 +8,11 @@
           "NOT /privacy*",
           "NOT /terms*",
           "NOT /*.html",
-          "NOT /index.html",
-          "NOT /404.html",
-          "/course/*", 
-          "/lesson/*",
-          "/profile/*",
-          "/tab/*"
+          "/course*",
+          "/lesson*",
+          "/profile*",
+          "/news*",
+          "/tab*"
         ]
       },
       {
@@ -22,12 +21,11 @@
           "NOT /privacy*",
           "NOT /terms*",
           "NOT /*.html",
-          "NOT /index.html",
-          "NOT /404.html",
-          "/course/*", 
-          "/lesson/*",
-          "/profile/*",
-          "/tab/*"
+          "/course*",
+          "/lesson*",
+          "/profile*",
+          "/news*",
+          "/tab*"
         ]
       }
     ]
