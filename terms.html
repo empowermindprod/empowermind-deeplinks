@@ -10,17 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Color palette from EmpowerMind Mobile */
-            --primary-color: #50326D;
-            --primary-dark: #3d2654;
+            /* Elvira Flavor Color palette */
+            --primary-color: #315E54;
+            --primary-dark: #16514A;
             --surface-color: #E6EEEC;
             --accent-color: #A7C0BB;
-            --gradient-end: #BE83A9;
-            --text-dark: #303151;
-            --text-light: #D1C3DF;
+            --selected-item: #293F3A;
+            --unselected-item: #7BAAA5;
+            --text-dark: #293F3A;
+            --text-medium: #39645B;
+            --text-light: #798783;
             --white: #FFFFFF;
             --error-color: #B41E1E;
-            --outline: #E0DFE8;
+            --outline: #D2D6D5;
         }
 
         * {
@@ -44,11 +46,11 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--gradient-end) 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
             color: var(--white);
             padding: 60px 20px 40px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(80, 50, 109, 0.15);
+            box-shadow: 0 4px 20px rgba(22, 81, 74, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -135,7 +137,7 @@
         }
 
         .last-updated {
-            color: #798783;
+            color: var(--text-light);
             font-size: 0.95rem;
             margin-bottom: 30px;
             padding: 15px;
@@ -165,7 +167,7 @@
         p {
             margin-bottom: 15px;
             font-size: 1.05rem;
-            color: #39645B;
+            color: var(--text-medium);
         }
 
         ul, ol {
@@ -175,7 +177,7 @@
         li {
             margin-bottom: 10px;
             font-size: 1.02rem;
-            color: #39645B;
+            color: var(--text-medium);
         }
 
         .highlight-box {
@@ -200,7 +202,7 @@
         }
 
         .contact-box {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--gradient-end) 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
             color: var(--white);
             padding: 30px;
             border-radius: 10px;
@@ -212,30 +214,40 @@
             color: var(--white);
             margin-top: 0;
             border: none;
+            font-size: 1.8rem;
+        }
+
+        .contact-box p {
+            color: var(--white);
+            opacity: 0.95;
+            font-size: 1.1rem;
         }
 
         .contact-box a {
             color: var(--white);
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             display: inline-block;
-            margin-top: 10px;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.2);
+            margin-top: 15px;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.25);
             border-radius: 10px;
             transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .contact-box a:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         footer {
             text-align: center;
             padding: 30px 20px;
-            color: #798783;
+            color: var(--text-light);
             font-size: 0.9rem;
         }
 
@@ -260,7 +272,7 @@
         }
 
         a:hover {
-            color: var(--gradient-end);
+            color: var(--primary-dark);
         }
 
         .feature-grid {
@@ -282,6 +294,10 @@
             font-weight: 700;
             margin-bottom: 10px;
             font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-medium);
         }
 
         .toc {
@@ -307,7 +323,7 @@
         }
 
         .toc a {
-            color: #39645B;
+            color: var(--text-medium);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -317,7 +333,7 @@
         }
 
         .toc a:hover {
-            background: rgba(80, 50, 109, 0.1);
+            background: rgba(49, 94, 84, 0.1);
             color: var(--primary-color);
             transform: translateX(5px);
         }
