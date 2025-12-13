@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EmpowerMind Deep Links</title>
+    <title>Virea Deep Links</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -68,7 +68,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🧠 EmpowerMind</h1>
+        <h1>🧠 Virea</h1>
         <p>Test deep links to open the mobile app</p>
         
         <button onclick="openDeepLink('profile')" class="js-link">👤 Open Profile</button>
@@ -76,12 +76,12 @@
         <button onclick="openDeepLink('courses/details?id=12345')" class="js-link">📚 Open Course</button>
 
         <p class="note">
-            These links will open the EmpowerMind mobile app if it's installed on your device.
+            These links will open the Virea mobile app if it's installed on your device.
         </p>
     </div>
 
     <footer style="text-align: center; padding: 2rem; color: #777; font-size: 0.9rem;">
-        <p>&copy; 2024 EmpowerMind. All rights reserved.</p>
+        <p>&copy; 2024 Virea. All rights reserved.</p>
         <p style="margin-top: 0.5rem;">
             <a href="/privacy.html" style="color: #667eea; text-decoration: none; margin: 0 1rem;">Privacy Policy</a>
             <a href="/terms.html" style="color: #667eea; text-decoration: none; margin: 0 1rem;">Terms of Service</a>
@@ -92,7 +92,7 @@
 function openDeepLink(path) {
     const httpsUrl = `https://deeplinks.empowermind.tech/${path}`;
     const customUrl = `empowermind://${path}`;
-    const intentUrl = `intent://deeplinks.empowermind.tech/${path}#Intent;scheme=https;package=com.empowermind;end`;
+    const intentUrl = `intent://deeplinks.empowermind.tech/${path}#Intent;scheme=https;package=com.empowermind.app;end`;
     
     console.log('Trying to open:', httpsUrl);
     
