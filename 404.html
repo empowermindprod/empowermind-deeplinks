@@ -57,6 +57,16 @@
             color: white;
             text-decoration: underline;
         }
+        .open-button {
+            margin-top: 1.5rem;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: #2b6fff;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +74,7 @@
         <div class="logo">🚀 EmpowerMind</div>
         <div class="message">Opening in app...</div>
         <div class="spinner"></div>
+        <button class="open-button" id="open-app" type="button">Open App</button>
         <div class="fallback">
             <p>If the app doesn't open automatically:</p>
             <p>📱 <strong>Android:</strong> Tap "Open with EmpowerMind"</p>
@@ -78,6 +89,7 @@
         const currentSearch = window.location.search;
         const fullUrl = window.location.href;
         const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(navigator.userAgent);
+        const openButton = document.getElementById('open-app');
 
         console.log('🔗 Deep link intercepted:', fullUrl);
 
@@ -105,6 +117,8 @@
                 }
             }, 1200);
         }
+
+        openButton.addEventListener('click', attemptAppOpen);
 
         // Attempt to open app immediately
         attemptAppOpen();
