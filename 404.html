@@ -71,6 +71,26 @@
             display: inline-block;
             text-decoration: none;
         }
+        .secondary-button {
+            margin-top: 0.75rem;
+            padding: 12px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            background: transparent;
+            color: #ffffff;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            min-width: 220px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .instructions {
+            margin-top: 1.25rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +99,10 @@
         <div class="message">Opening in app...</div>
         <div class="spinner"></div>
         <a class="open-button" id="open-app" role="button">Open App</a>
+        <a class="secondary-button" id="open-browser" target="_blank" rel="noopener">Open in Browser</a>
+        <div class="instructions" id="in-app-instructions" hidden>
+            If you are in Instagram, tap the menu and choose "Open in browser".
+        </div>
         <div class="fallback">
             <p>If the app doesn't open automatically:</p>
             <p>📱 <strong>Android:</strong> Tap "Open with EmpowerMind"</p>
@@ -94,6 +118,8 @@
         const fullUrl = window.location.href;
         const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(navigator.userAgent);
         const openButton = document.getElementById('open-app');
+        const openBrowserButton = document.getElementById('open-browser');
+        const inAppInstructions = document.getElementById('in-app-instructions');
 
         console.log('🔗 Deep link intercepted:', fullUrl);
 
@@ -103,6 +129,7 @@
             const customScheme = `empowermind://${currentPath.replace(/^\\//, '')}${currentSearch}`;
             const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind.app;end`;
             openButton.setAttribute('href', customScheme);
+            openBrowserButton.setAttribute('href', httpsUrl);
             return { httpsUrl, customScheme, androidIntent };
         }
 
@@ -129,6 +156,9 @@
         }
 
         buildLinks();
+        if (isInApp) {
+            inAppInstructions.hidden = false;
+        }
         openButton.addEventListener('click', () => {
             attemptAppOpen();
         });
