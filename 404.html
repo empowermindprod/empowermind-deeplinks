@@ -98,11 +98,16 @@
         console.log('🔗 Deep link intercepted:', fullUrl);
 
         // Try to open the app with the deep link
-        function attemptAppOpen() {
+        function buildLinks() {
             const httpsUrl = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}`;
             const customScheme = `empowermind://${currentPath.replace(/^\\//, '')}${currentSearch}`;
             const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind.app;end`;
             openButton.setAttribute('href', customScheme);
+            return { httpsUrl, customScheme, androidIntent };
+        }
+
+        function attemptAppOpen() {
+            const { httpsUrl, customScheme, androidIntent } = buildLinks();
 
             if (isInApp) {
                 window.location.href = customScheme;
@@ -123,12 +128,8 @@
             }, 1200);
         }
 
-        openButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            attemptAppOpen();
-        });
-        openButton.addEventListener('touchend', (event) => {
-            event.preventDefault();
+        buildLinks();
+        openButton.addEventListener('click', () => {
             attemptAppOpen();
         });
 
