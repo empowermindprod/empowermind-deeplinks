@@ -77,40 +77,38 @@
         const currentPath = window.location.pathname;
         const currentSearch = window.location.search;
         const fullUrl = window.location.href;
-        
+        const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(navigator.userAgent);
+
         console.log('🔗 Deep link intercepted:', fullUrl);
-        
+
         // Try to open the app with the deep link
         function attemptAppOpen() {
-            // For Android - try intent URL
-            const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind;end`;
-            
-            // For iOS - try universal link
-            const universalLink = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}`;
-            
-            console.log('🤖 Trying Android intent:', androidIntent);
-            console.log('🍎 Trying iOS universal link:', universalLink);
-            
-            // Create a hidden iframe to trigger the app
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = androidIntent;
-            document.body.appendChild(iframe);
-            
-            // Fallback for iOS
+            const httpsUrl = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}`;
+            const customScheme = `empowermind://${currentPath.replace(/^\\//, '')}${currentSearch}`;
+            const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind.app;end`;
+
+            if (isInApp) {
+                window.location.href = customScheme;
+                return;
+            }
+
+            if (/Android/i.test(navigator.userAgent)) {
+                window.location.href = androidIntent;
+                return;
+            }
+
+            window.location.href = httpsUrl;
+
             setTimeout(() => {
-                window.location.href = universalLink;
-            }, 500);
-            
-            // Remove iframe after attempt
-            setTimeout(() => {
-                document.body.removeChild(iframe);
-            }, 1000);
+                if (!document.hidden) {
+                    window.location.href = customScheme;
+                }
+            }, 1200);
         }
-        
+
         // Attempt to open app immediately
         attemptAppOpen();
-        
+
         // Show fallback message after 3 seconds
         setTimeout(() => {
             document.querySelector('.message').textContent = 'App not installed?';

@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.empowermind",
-      "sha256_cert_fingerprints": ["E7:D6:89:26:45:72:10:6F:3E:8E:E1:20:31:30:8E:05:86:4E:EF:B1:51:77:47:FF:AF:A0:52:9F:89:76:C8:B4"]
+      "sha256_cert_fingerprints": ["EF:91:1B:5C:9D:87:27:EC:C8:56:44:EC:B3:73:B5:93:60:48:CE:A0:C6:CE:2E:2D:C5:33:73:31:D3:A3:10:2F"]
     }
   },
   {
@@ -12,7 +12,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.empowermind.app",
-      "sha256_cert_fingerprints": ["E7:D6:89:26:45:72:10:6F:3E:8E:E1:20:31:30:8E:05:86:4E:EF:B1:51:77:47:FF:AF:A0:52:9F:89:76:C8:B4"]
+      "sha256_cert_fingerprints": ["EF:91:1B:5C:9D:87:27:EC:C8:56:44:EC:B3:73:B5:93:60:48:CE:A0:C6:CE:2E:2D:C5:33:73:31:D3:A3:10:2F"]
     }
   }
 ]
