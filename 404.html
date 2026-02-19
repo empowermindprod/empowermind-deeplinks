@@ -13,7 +13,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #315E54 0%, #1D0D34 100%);
             color: white;
             text-align: center;
         }
@@ -27,13 +27,14 @@
         }
         .logo {
             font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #EED9A5;
         }
         .message {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            font-size: 1.05rem;
+            margin-bottom: 1.2rem;
+            opacity: 0.95;
         }
         .spinner {
             width: 40px;
@@ -62,53 +63,46 @@
             padding: 16px 28px;
             border: none;
             border-radius: 10px;
-            background: #2b6fff;
-            color: #ffffff;
+            background: linear-gradient(135deg, #EED9A5 0%, #A7C0BB 100%);
+            color: #1B302B;
             font-weight: 700;
             cursor: pointer;
             font-size: 1.1rem;
             min-width: 220px;
             display: inline-block;
             text-decoration: none;
+            box-shadow: 0 8px 20px rgba(27, 48, 43, 0.35);
         }
-        .secondary-button {
-            margin-top: 0.75rem;
-            padding: 12px 22px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-            background: transparent;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1rem;
-            min-width: 220px;
-            display: inline-block;
-            text-decoration: none;
+        .open-button:active {
+            transform: translateY(1px);
         }
         .instructions {
             margin-top: 1.25rem;
             font-size: 0.95rem;
-            opacity: 0.9;
+            opacity: 0.88;
             line-height: 1.4;
+            color: #E0DFE8;
+        }
+        .caption {
+            margin-top: 0.9rem;
+            font-size: 0.92rem;
+            color: #D2D6D5;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">🚀 EmpowerMind</div>
-        <div class="message">Opening in app...</div>
+        <div class="logo">Virea</div>
+        <div class="message">Opening in the app...</div>
         <div class="spinner"></div>
         <a class="open-button" id="open-app" role="button">Open App</a>
-        <a class="secondary-button" id="open-browser" target="_blank" rel="noopener">Open in Browser</a>
         <div class="instructions" id="in-app-instructions" hidden>
             If you are in Instagram, tap the menu and choose "Open in browser".
         </div>
-        <div class="fallback">
-            <p>If the app doesn't open automatically:</p>
-            <p>📱 <strong>Android:</strong> Tap "Open with EmpowerMind"</p>
-            <p>🍎 <strong>iOS:</strong> Tap "Open" when prompted</p>
-            <p><a href="/">Visit our website</a></p>
+        <div class="fallback" id="fallback-tip" hidden>
+            <p>If nothing happens, tap <strong>Open App</strong> once again.</p>
         </div>
+        <div class="caption">Use this page only to continue to Virea.</div>
     </div>
 
     <script>
@@ -121,23 +115,21 @@
         const isIOS = /iPhone|iPad|iPod/i.test(ua);
         const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(ua);
         const openButton = document.getElementById('open-app');
-        const openBrowserButton = document.getElementById('open-browser');
         const inAppInstructions = document.getElementById('in-app-instructions');
         const messageEl = document.querySelector('.message');
         const spinnerEl = document.querySelector('.spinner');
+        const fallbackTipEl = document.getElementById('fallback-tip');
         const attemptKey = `dl-open-attempted:${currentPath}${currentSearch}${currentHash}`;
 
         console.log('Deep link intercepted:', fullUrl);
 
         function buildLinks() {
             const normalizedPath = currentPath.replace(/^\/+/, '');
-            const websiteUrl = '/';
             const customScheme = `empowermind://${normalizedPath}${currentSearch}${currentHash}`;
             const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind.app;end`;
             const httpsDeepLink = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}${currentHash}`;
 
             openButton.setAttribute('href', customScheme);
-            openBrowserButton.setAttribute('href', websiteUrl);
 
             return { customScheme, androidIntent, httpsDeepLink };
         }
@@ -170,8 +162,9 @@
         }
 
         function showFallbackState() {
-            messageEl.textContent = 'App not installed?';
+            messageEl.textContent = 'Could not open automatically.';
             spinnerEl.style.display = 'none';
+            fallbackTipEl.hidden = false;
         }
 
         if (isInApp) {
