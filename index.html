@@ -13,78 +13,79 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f0f2f5;
-            color: #333;
+            background: linear-gradient(135deg, #315E54 0%, #1D0D34 100%);
+            color: #ffffff;
             text-align: center;
         }
         .container {
-            background-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 90%;
         }
         h1 {
-            color: #2c3e50;
-            font-size: 2.2em;
-            margin-bottom: 20px;
+            color: #EED9A5;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
         }
         p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-bottom: 22px;
+            color: #E0DFE8;
         }
         .js-link {
             display: block;
-            background-color: #34C759;
-            color: white;
-            padding: 15px 30px;
-            margin: 15px auto;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #EED9A5 0%, #A7C0BB 100%);
+            color: #1B302B;
+            padding: 15px 26px;
+            margin: 12px auto;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: fit-content;
+            font-size: 1.05rem;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+            width: 100%;
             border: none;
             cursor: pointer;
             font-family: inherit;
+            box-shadow: 0 8px 20px rgba(27, 48, 43, 0.35);
         }
         .js-link:hover {
-            background-color: #28A745;
             transform: translateY(-2px);
         }
         .js-link:active {
             transform: translateY(0);
         }
         .note {
-            font-size: 0.9em;
-            color: #777;
-            margin-top: 30px;
+            font-size: 0.92rem;
+            color: #D2D6D5;
+            margin-top: 18px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧠 Virea</h1>
-        <p>Test deep links to open the mobile app</p>
+        <h1>Virea</h1>
+        <p>Choose where you want to continue in the app.</p>
         
-        <button onclick="openDeepLink('profile')" class="js-link">👤 Open Profile</button>
-        <button onclick="openDeepLink('news')" class="js-link">📰 Open News</button>
-        <button onclick="openDeepLink('courses/details?id=12345')" class="js-link">📚 Open Course</button>
+        <button onclick="openDeepLink('profile')" class="js-link">Open Profile</button>
+        <button onclick="openDeepLink('news')" class="js-link">Open News</button>
+        <button onclick="openDeepLink('courses/details?id=12345')" class="js-link">Open Course</button>
 
         <p class="note">
-            These links will open the Virea mobile app if it's installed on your device.
+            If the app is installed, it will open directly.
         </p>
     </div>
 
-    <footer style="text-align: center; padding: 2rem; color: #777; font-size: 0.9rem;">
+    <footer style="text-align: center; padding: 2rem; color: #D2D6D5; font-size: 0.9rem;">
         <p>&copy; 2024 Virea. All rights reserved.</p>
         <p style="margin-top: 0.5rem;">
-            <a href="/privacy.html" style="color: #667eea; text-decoration: none; margin: 0 1rem;">Privacy Policy</a>
-            <a href="/terms.html" style="color: #667eea; text-decoration: none; margin: 0 1rem;">Terms of Service</a>
+            <a href="/privacy.html" style="color: #EED9A5; text-decoration: none; margin: 0 1rem;">Privacy Policy</a>
+            <a href="/terms.html" style="color: #EED9A5; text-decoration: none; margin: 0 1rem;">Terms of Service</a>
         </p>
     </footer>
 </body>
