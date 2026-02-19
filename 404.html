@@ -100,7 +100,7 @@
             If you are in Instagram, tap the menu and choose "Open in browser".
         </div>
         <div class="fallback" id="fallback-tip" hidden>
-            <p>If nothing happens, tap <strong>Open App</strong> once again.</p>
+            <p>If nothing happens, tap <strong>Open App</strong> again. On the second tap we will open the store.</p>
         </div>
         <div class="caption">Use this page only to continue to Virea.</div>
     </div>
@@ -139,6 +139,7 @@
         const links = buildLinks();
         let pageBecameHidden = false;
         let storeRedirectScheduled = false;
+        let openButtonClicks = 0;
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
@@ -189,7 +190,6 @@
             messageEl.textContent = 'Could not open automatically.';
             spinnerEl.style.display = 'none';
             fallbackTipEl.hidden = false;
-            redirectToStore();
         }
 
         if (isInApp) {
@@ -198,12 +198,17 @@
 
         openButton.addEventListener('click', (event) => {
             event.preventDefault();
+            openButtonClicks += 1;
             messageEl.textContent = 'Trying to open the app...';
             spinnerEl.style.display = 'block';
             tryOpenApp(true);
             setTimeout(() => {
                 if (!pageBecameHidden) {
-                    showFallbackState();
+                    if (openButtonClicks >= 2) {
+                        redirectToStore();
+                    } else {
+                        showFallbackState();
+                    }
                 }
             }, 1800);
         });
