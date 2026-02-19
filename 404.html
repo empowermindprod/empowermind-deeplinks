@@ -112,65 +112,95 @@
     </div>
 
     <script>
-        // Get the current URL path
         const currentPath = window.location.pathname;
         const currentSearch = window.location.search;
+        const currentHash = window.location.hash;
         const fullUrl = window.location.href;
-        const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(navigator.userAgent);
+        const ua = navigator.userAgent || '';
+        const isAndroid = /Android/i.test(ua);
+        const isIOS = /iPhone|iPad|iPod/i.test(ua);
+        const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(ua);
         const openButton = document.getElementById('open-app');
         const openBrowserButton = document.getElementById('open-browser');
         const inAppInstructions = document.getElementById('in-app-instructions');
+        const messageEl = document.querySelector('.message');
+        const spinnerEl = document.querySelector('.spinner');
+        const attemptKey = `dl-open-attempted:${currentPath}${currentSearch}${currentHash}`;
 
-        console.log('🔗 Deep link intercepted:', fullUrl);
+        console.log('Deep link intercepted:', fullUrl);
 
-        // Try to open the app with the deep link
         function buildLinks() {
-            const httpsUrl = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}`;
-            const customScheme = `empowermind://${currentPath.replace(/^\\//, '')}${currentSearch}`;
+            const normalizedPath = currentPath.replace(/^\/+/, '');
+            const websiteUrl = '/';
+            const customScheme = `empowermind://${normalizedPath}${currentSearch}${currentHash}`;
             const androidIntent = `intent://deeplinks.empowermind.tech${currentPath}${currentSearch}#Intent;scheme=https;package=com.empowermind.app;end`;
+            const httpsDeepLink = `https://deeplinks.empowermind.tech${currentPath}${currentSearch}${currentHash}`;
+
             openButton.setAttribute('href', customScheme);
-            openBrowserButton.setAttribute('href', httpsUrl);
-            return { httpsUrl, customScheme, androidIntent };
+            openBrowserButton.setAttribute('href', websiteUrl);
+
+            return { customScheme, androidIntent, httpsDeepLink };
         }
 
-        function attemptAppOpen() {
-            const { httpsUrl, customScheme, androidIntent } = buildLinks();
+        const links = buildLinks();
+        let pageBecameHidden = false;
 
-            if (isInApp) {
-                window.location.href = customScheme;
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                pageBecameHidden = true;
+            }
+        });
+
+        function tryOpenApp(userInitiated) {
+            if (isAndroid) {
+                window.location.href = links.androidIntent;
                 return;
             }
 
-            if (/Android/i.test(navigator.userAgent)) {
-                window.location.href = androidIntent;
-                return;
+            // In iOS and in-app browsers, custom scheme works better with user interaction.
+            window.location.href = links.customScheme;
+
+            if (!userInitiated && !isInApp && isIOS) {
+                setTimeout(() => {
+                    if (!pageBecameHidden) {
+                        window.location.href = links.httpsDeepLink;
+                    }
+                }, 600);
             }
-
-            window.location.href = httpsUrl;
-
-            setTimeout(() => {
-                if (!document.hidden) {
-                    window.location.href = customScheme;
-                }
-            }, 1200);
         }
 
-        buildLinks();
+        function showFallbackState() {
+            messageEl.textContent = 'App not installed?';
+            spinnerEl.style.display = 'none';
+        }
+
         if (isInApp) {
             inAppInstructions.hidden = false;
         }
-        openButton.addEventListener('click', () => {
-            attemptAppOpen();
+
+        openButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            messageEl.textContent = 'Trying to open the app...';
+            spinnerEl.style.display = 'block';
+            tryOpenApp(true);
+            setTimeout(() => {
+                if (!pageBecameHidden) {
+                    showFallbackState();
+                }
+            }, 1800);
         });
 
-        // Attempt to open app immediately
-        attemptAppOpen();
+        // Auto-open only once per page/session to avoid redirect loops.
+        if (!sessionStorage.getItem(attemptKey)) {
+            sessionStorage.setItem(attemptKey, '1');
+            tryOpenApp(false);
+        }
 
-        // Show fallback message after 3 seconds
         setTimeout(() => {
-            document.querySelector('.message').textContent = 'App not installed?';
-            document.querySelector('.spinner').style.display = 'none';
-        }, 3000);
+            if (!pageBecameHidden) {
+                showFallbackState();
+            }
+        }, 2200);
     </script>
 </body>
 </html>
