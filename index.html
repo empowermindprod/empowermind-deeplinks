@@ -91,38 +91,53 @@
 </body>
 <script>
 function openDeepLink(path) {
+    const ua = navigator.userAgent || '';
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.empowermind.app';
+    const appStoreUrl = 'https://apps.apple.com/ua/app/virea/id6753343760';
     const httpsUrl = `https://deeplinks.empowermind.tech/${path}`;
     const customUrl = `empowermind://${path}`;
     const intentUrl = `intent://deeplinks.empowermind.tech/${path}#Intent;scheme=https;package=com.empowermind.app;end`;
-    
+
+    function getStoreUrl() {
+        if (isAndroid) return playStoreUrl;
+        if (isIOS) return appStoreUrl;
+        return null;
+    }
+
+    function redirectToStoreIfNeeded() {
+        if (document.hidden) return;
+        const storeUrl = getStoreUrl();
+        if (storeUrl) {
+            window.location.replace(storeUrl);
+        }
+    }
+
     console.log('Trying to open:', httpsUrl);
-    
-    // For Android Chrome, try intent:// scheme first
-    if (/Android/i.test(navigator.userAgent)) {
+
+    // For Android, try intent:// first then fallback to Google Play.
+    if (isAndroid) {
         console.log('Android detected, trying intent URL:', intentUrl);
         window.location.href = intentUrl;
+        setTimeout(redirectToStoreIfNeeded, 1800);
         return;
     }
-    
-    // Try HTTPS deep link first
-    const startTime = Date.now();
-    window.location.href = httpsUrl;
-    
-    // Fallback to custom scheme after 2 seconds if app didn't open
-    setTimeout(() => {
-        if (Date.now() - startTime < 2500) {
-            console.log('Fallback to custom scheme:', customUrl);
-            window.location.href = customUrl;
-        }
-    }, 2000);
-    
-    // Additional fallback - try to detect if we're still on the page
+
+    // iOS/other: try custom scheme first.
+    window.location.href = customUrl;
+
+    // Then retry via HTTPS app link.
     setTimeout(() => {
         if (!document.hidden) {
-            console.log('App might not have opened, trying custom scheme again');
-            window.location.href = customUrl;
+            window.location.href = httpsUrl;
         }
-    }, 3000);
+    }, 800);
+
+    // Finally, redirect to App Store if still not opened.
+    setTimeout(() => {
+        redirectToStoreIfNeeded();
+    }, 2300);
 }
 </script>
 </html>

@@ -114,6 +114,8 @@
         const isAndroid = /Android/i.test(ua);
         const isIOS = /iPhone|iPad|iPod/i.test(ua);
         const isInApp = /Instagram|FBAN|FBAV|Telegram/i.test(ua);
+        const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.empowermind.app';
+        const appStoreUrl = 'https://apps.apple.com/ua/app/virea/id6753343760';
         const openButton = document.getElementById('open-app');
         const inAppInstructions = document.getElementById('in-app-instructions');
         const messageEl = document.querySelector('.message');
@@ -136,6 +138,7 @@
 
         const links = buildLinks();
         let pageBecameHidden = false;
+        let storeRedirectScheduled = false;
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) {
@@ -161,10 +164,32 @@
             }
         }
 
+        function getStoreUrl() {
+            if (isAndroid) return playStoreUrl;
+            if (isIOS) return appStoreUrl;
+            return null;
+        }
+
+        function redirectToStore() {
+            const storeUrl = getStoreUrl();
+            if (!storeUrl || pageBecameHidden || storeRedirectScheduled) return;
+
+            storeRedirectScheduled = true;
+            messageEl.textContent = 'Redirecting to the store...';
+            spinnerEl.style.display = 'none';
+
+            setTimeout(() => {
+                if (!pageBecameHidden) {
+                    window.location.replace(storeUrl);
+                }
+            }, 700);
+        }
+
         function showFallbackState() {
             messageEl.textContent = 'Could not open automatically.';
             spinnerEl.style.display = 'none';
             fallbackTipEl.hidden = false;
+            redirectToStore();
         }
 
         if (isInApp) {
